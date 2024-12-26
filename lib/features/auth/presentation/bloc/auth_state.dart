@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc_clean_architecture/features/auth/domain/entities/user.dart';
 
 @immutable
 sealed class AuthState {
@@ -11,7 +12,7 @@ final class AuthInitial extends AuthState {}
 final class AuthLoading extends AuthState {}
 
 final class AuthSuccess extends AuthState {
-  final String uid;
+  final User uid;
   const AuthSuccess(this.uid);
 }
 

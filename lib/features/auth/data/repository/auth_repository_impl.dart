@@ -1,6 +1,7 @@
 import 'package:flutter_bloc_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/data/datasources/auth_remote_source.dart';
+import 'package:flutter_bloc_clean_architecture/features/auth/domain/entities/user.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -15,20 +16,20 @@ class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, String>> loginWithEmailAndPassword(
+  Future<Either<Failure, User>> loginWithEmailAndPassword(
       {required String email, required String password}) {
     // TODO: implement loginWithEmailAndPassword
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, String>> signUpWithEmailAndPassword(
+  Future<Either<Failure, User>> signUpWithEmailAndPassword(
       {required String name, required String email, required String password}) async{
     try {
-     final userId = await remoteDataSource.signUpWithEmailPassword(
+     final user = await remoteDataSource.signUpWithEmailPassword(
           name: name, email: email, password: password);
 
-     return right(userId);
+     return right(user);
     } on ServerExpection catch(e){
       return left(Failure(e.message));
     }
