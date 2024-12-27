@@ -4,6 +4,7 @@ import 'package:flutter_bloc_clean_architecture/features/auth/data/datasources/a
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/entities/user.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class AuthRepositoryImpl implements AuthRepository {
   /*
@@ -17,20 +18,35 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, User>> loginWithEmailAndPassword(
-      {required String email, required String password}) {
-    // TODO: implement loginWithEmailAndPassword
-    throw UnimplementedError();
+      {required String email, required String password}) async {
+    return _getUser(
+      () async => await remoteDataSource.loginWithEmailPassword(
+          email: email, password: password),
+    );
   }
 
   @override
   Future<Either<Failure, User>> signUpWithEmailAndPassword(
-      {required String name, required String email, required String password}) async{
-    try {
-     final user = await remoteDataSource.signUpWithEmailPassword(
-          name: name, email: email, password: password);
+      {required String name,
+      required String email,
+      required String password}) async {
+    return _getUser(
+      () async => await remoteDataSource.signUpWithEmailPassword(
+          name: name, email: email, password: password),
+    );
+  }
 
-     return right(user);
-    } on ServerExpection catch(e){
+  Future<Either<Failure, User>> _getUser(
+    Future<User> Function() fn,
+  ) async {
+    try {
+      final user = await fn();
+
+      return right(user);
+    } on sp.AuthException catch (e){
+      return left(Failure(e.message));
+    }
+    on ServerExpection catch (e) {
       return left(Failure(e.message));
     }
   }
