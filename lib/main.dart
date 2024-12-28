@@ -8,6 +8,8 @@ import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc_clean_architecture/init_dependencies.dart';
 
+import 'features/blog/presentation/pages/blog_page.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -51,9 +53,7 @@ class _MyAppState extends State<MyApp> {
           },
             builder: (context, isLoggedIn) {
             if(isLoggedIn) {
-              return const Scaffold(
-                body: Center(child: Text('Home')),
-              );
+              return const BlogPage();
             }
               return const LoginPage();
             },
