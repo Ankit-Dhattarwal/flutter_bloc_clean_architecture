@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
+import 'package:flutter_bloc_clean_architecture/core/usecase/usecase.dart';
+import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/current_user.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/user_login.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_event.dart';
@@ -8,17 +10,37 @@ import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/
 class AuthBLoc extends Bloc<AuthEvent, AuthState> {
   final UserSignUp _userSignUp;
   final UserLogin _userLogin;
+  final CurrentUser _currentUser;
 
   AuthBLoc({
     required UserSignUp userSignUp,
     required UserLogin userLogin,
+    required CurrentUser currentUser,
 
     /// --> here you can direct use AuthBloc(this._userSignUp) , but prefer named arguments.
   })  : _userSignUp = userSignUp,
         _userLogin = userLogin,
+        _currentUser = currentUser,
         super(AuthInitial()) {
     on<AuthSignUpEvent>(_onAuthSignUp);
     on<AuthLoginEvent>(_onAuthLogin);
+    on<AuthIsUserLoggedInEvent>(_isUserLoggedIn);
+  }
+
+  void _isUserLoggedIn(
+      AuthIsUserLoggedInEvent event, Emitter<AuthState> emit) async {
+    final res = await _currentUser(NoParams());
+
+    res.fold(
+        (l) => emit(AuthFailure(l.message)),
+        (r) {
+              print(r.id);
+              print(r.name);
+              print(r.email);
+              emit(
+                AuthSuccess(r),
+              );
+            });
   }
 
   void _onAuthSignUp(AuthSignUpEvent event, Emitter<AuthState> emit) async {

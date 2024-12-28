@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture/ankit-test/counter/counter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture/core/theme/theme.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc_clean_architecture/init_dependencies.dart';
 
@@ -20,9 +21,20 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthBLoc>().add(AuthIsUserLoggedInEvent());
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CounterBloc>(

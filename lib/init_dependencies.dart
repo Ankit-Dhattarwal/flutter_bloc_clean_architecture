@@ -2,6 +2,7 @@ import 'package:flutter_bloc_clean_architecture/core/secrets/app_secrets.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/data/datasources/auth_remote_source.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/repository/auth_repository.dart';
+import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/current_user.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/user_login.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_bloc.dart';
@@ -21,33 +22,39 @@ Future<void> initDependencies() async {
 }
 
 void _initAuth() {
-  serviceLocator.registerFactory<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImp(serviceLocator()),
+  // DataSource
+  serviceLocator
+    ..registerFactory<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImp(serviceLocator()),
 
-    /// --> return new object instance every single time
-  );
-
-  serviceLocator.registerFactory<AuthRepository>(
-    () => AuthRepositoryImpl(serviceLocator()),
-  );
-
-  serviceLocator.registerFactory(
-    () => UserSignUp(
-      serviceLocator(),
-    ),
-  );
-
-
-  serviceLocator.registerFactory(
-        () => UserLogin(
-      serviceLocator(),
-    ),
-  );
-
-  serviceLocator.registerLazySingleton(
-    () => AuthBLoc(
-      userSignUp: serviceLocator(),
-      userLogin: serviceLocator(),
-    ),
-  );
+      /// --> return new object instance every single time
+    )
+    // Repository
+    ..registerFactory<AuthRepository>(
+      () => AuthRepositoryImpl(serviceLocator()),
+    )
+    //UseCases
+    ..registerFactory(
+      () => UserSignUp(
+        serviceLocator(),
+      ),
+    )
+    // Bloc
+    ..registerFactory(
+      () => UserLogin(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(
+      () => CurrentUser(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => AuthBLoc(
+        userSignUp: serviceLocator(),
+        userLogin: serviceLocator(),
+        currentUser: serviceLocator(),
+      ),
+    );
 }
