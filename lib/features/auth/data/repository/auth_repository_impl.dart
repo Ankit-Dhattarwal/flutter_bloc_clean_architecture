@@ -1,7 +1,7 @@
+import 'package:flutter_bloc_clean_architecture/core/common/entities/user.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/data/datasources/auth_remote_source.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/domain/entities/user.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sp;
@@ -25,7 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
        return left(Failure('User is not logged in!'));
      }
      return right(user);
-     
+
    }on ServerExpection catch(e){
      return left(Failure(e.message));
    }

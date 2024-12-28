@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture/ankit-test/counter/counter_bloc.dart';
+import 'package:flutter_bloc_clean_architecture/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:flutter_bloc_clean_architecture/core/theme/theme.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_event.dart';
@@ -13,6 +14,9 @@ void main() async {
   await initDependencies();
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider(
+        create: (_) => serviceLocator<AppUserCubit>(),
+      ),
       BlocProvider(
         create: (_) => serviceLocator<AuthBLoc>(),
       ),
@@ -37,14 +41,23 @@ class _MyAppState extends State<MyApp> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CounterBloc>(
-      create: (context) => CounterBloc(),
-      child: MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Blog App',
         theme: AppTheme.darkThemeMode,
-        home: const LoginPage(),
-      ),
-    );
+        home: BlocSelector<AppUserCubit, AppUserState, bool>(
+          selector: (state){
+            return state is AppUserLoggedIn;
+          },
+            builder: (context, isLoggedIn) {
+            if(isLoggedIn) {
+              return const Scaffold(
+                body: Center(child: Text('Home')),
+              );
+            }
+              return const LoginPage();
+            },
+        ),
+      );
   }
 }

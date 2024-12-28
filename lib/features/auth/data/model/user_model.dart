@@ -1,4 +1,5 @@
-import 'package:flutter_bloc_clean_architecture/features/auth/domain/entities/user.dart';
+
+import 'package:flutter_bloc_clean_architecture/core/common/entities/user.dart';
 
 class UserModel extends User {
   UserModel({required super.id, required super.email, required super.name});

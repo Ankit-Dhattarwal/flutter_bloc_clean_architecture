@@ -1,3 +1,4 @@
+import 'package:flutter_bloc_clean_architecture/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:flutter_bloc_clean_architecture/core/secrets/app_secrets.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/data/datasources/auth_remote_source.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/data/repository/auth_repository_impl.dart';
@@ -17,6 +18,9 @@ Future<void> initDependencies() async {
       url: AppSecrets.supabaseUrl, anonKey: AppSecrets.supabaseAnonKey);
 
   serviceLocator.registerLazySingleton(() => supabase.client);
+  
+  // -- core
+  serviceLocator.registerLazySingleton(() => AppUserCubit());
 
   /// --> return same object instance on every single time
 }
@@ -55,6 +59,7 @@ void _initAuth() {
         userSignUp: serviceLocator(),
         userLogin: serviceLocator(),
         currentUser: serviceLocator(),
+        appUserCubit: serviceLocator(),
       ),
     );
 }

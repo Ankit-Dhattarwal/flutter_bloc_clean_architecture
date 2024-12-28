@@ -1,5 +1,9 @@
 
+/*
+  -- core can't depend on other features
+  -- other features can depend on cores
 
+ */
 class User{
   final String id;
   final String email;

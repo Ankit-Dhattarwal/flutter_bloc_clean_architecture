@@ -1,6 +1,6 @@
 
- import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/domain/entities/user.dart';
+ import 'package:flutter_bloc_clean_architecture/core/common/entities/user.dart';
+import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// --> NOTE: This interface is implementation in data layer.
