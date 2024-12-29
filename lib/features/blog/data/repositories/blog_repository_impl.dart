@@ -23,7 +23,7 @@ class BlogRepositoryImpl implements BlogRepository {
     try {
       BlogModel blogModel = BlogModel(
         id: const Uuid().v1(),
-        posterId: '',
+        posterId: posterId,
         title: title,
         content: content,
         imageUrl: '',
