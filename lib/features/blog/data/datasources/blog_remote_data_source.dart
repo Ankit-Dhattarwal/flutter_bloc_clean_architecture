@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter_bloc_clean_architecture/core/error/exceptions.dart';
@@ -11,32 +9,50 @@ abstract interface class BlogRemoteDataSource {
   Future<String> uploadBlogImage({
     required File image,
     required BlogModel blog,
-});
+  });
+  Future<List<BlogModel>> getAllBrands();
 }
 
-class BlogRemoteDataSourceImpl extends BlogRemoteDataSource{
+class BlogRemoteDataSourceImpl extends BlogRemoteDataSource {
   final SupabaseClient supabaseClient;
 
   BlogRemoteDataSourceImpl(this.supabaseClient);
   @override
-  Future<BlogModel> uploadBlog(BlogModel blog) async{
-    try{
-      final blogData = await supabaseClient.from('blogs').insert(blog.toJson()).select();
+  Future<BlogModel> uploadBlog(BlogModel blog) async {
+    try {
+      final blogData =
+          await supabaseClient.from('blogs').insert(blog.toJson()).select();
       return BlogModel.fromJson(blogData.first);
-    }catch(e){
+    } catch (e) {
       throw ServerExpection(e.toString());
     }
   }
 
   @override
-  Future<String> uploadBlogImage({required File image, required BlogModel blog,}) async{
-    try{
+  Future<String> uploadBlogImage({
+    required File image,
+    required BlogModel blog,
+  }) async {
+    try {
       print('ankit -${blog.id}');
       await supabaseClient.storage.from('blog_images').upload(blog.id, image);
       return supabaseClient.storage.from('blog_images').getPublicUrl(blog.id);
-    }catch(e){
+    } catch (e) {
       throw ServerExpection(e.toString());
     }
   }
 
+  @override
+  Future<List<BlogModel>> getAllBrands() async {
+    try {
+      final blogs =
+          await supabaseClient.from('blogs').select('*, profiles (name)');
+      return blogs
+          .map((blog) => BlogModel.fromJson(blog)
+              .copyWith(posterName: blog['profiles']['name']))
+          .toList();
+    } catch (e) {
+      throw ServerExpection(e.toString());
+    }
+  }
 }
