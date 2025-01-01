@@ -1,13 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_clean_architecture/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:flutter_bloc_clean_architecture/core/common/entities/user.dart';
-import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
 import 'package:flutter_bloc_clean_architecture/core/usecase/usecase.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/current_user.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/user_login.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/usecases/user_sign_up.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_event.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_state.dart';
+import 'package:flutter/material.dart';
+
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 class AuthBLoc extends Bloc<AuthEvent, AuthState> {
   final UserSignUp _userSignUp;

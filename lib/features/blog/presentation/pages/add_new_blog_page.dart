@@ -4,9 +4,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_clean_architecture/ankit-test/counter/counter_page.dart';
 import 'package:flutter_bloc_clean_architecture/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:flutter_bloc_clean_architecture/core/common/widgets/loader.dart';
+import 'package:flutter_bloc_clean_architecture/core/constant/costant.dart';
 import 'package:flutter_bloc_clean_architecture/core/theme/appColors.dart';
 import 'package:flutter_bloc_clean_architecture/core/utils/pick_image.dart';
 import 'package:flutter_bloc_clean_architecture/core/utils/show_snackbar.dart';
@@ -143,12 +143,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: [
-                          'Technology',
-                          'Programming',
-                          'Business',
-                          'Entertainment'
-                        ]
+                        children: Constants.topics
                             .map(
                               (e) => Padding(
                                 padding: const EdgeInsets.all(5),

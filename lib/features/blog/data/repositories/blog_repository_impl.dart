@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_bloc_clean_architecture/core/constant/costant.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
 import 'package:flutter_bloc_clean_architecture/core/network/connection_checker.dart';
@@ -26,7 +27,7 @@ class BlogRepositoryImpl implements BlogRepository {
   }) async {
     try {
       if(!await connectionChecker.isConnected){
-        return left(Failure('No Internet Connection!!!'),);
+        return left(Failure(Constants.noConnectionErrorMsg),);
       }
       BlogModel blogModel = BlogModel(
         id: const Uuid().v1(),

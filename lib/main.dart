@@ -4,7 +4,6 @@ import 'package:flutter_bloc_clean_architecture/ankit-test/counter/counter_bloc.
 import 'package:flutter_bloc_clean_architecture/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:flutter_bloc_clean_architecture/core/theme/theme.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc_clean_architecture/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:flutter_bloc_clean_architecture/init_dependencies.dart';

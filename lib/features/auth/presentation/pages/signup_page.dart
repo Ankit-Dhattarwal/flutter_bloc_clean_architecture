@@ -4,8 +4,6 @@ import 'package:flutter_bloc_clean_architecture/core/common/widgets/loader.dart'
 import 'package:flutter_bloc_clean_architecture/core/theme/appColors.dart';
 import 'package:flutter_bloc_clean_architecture/core/utils/show_snackbar.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_event.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/widgets/auth_field.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/widgets/auth_gradient_button.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc_clean_architecture/core/common/entities/user.dart';
+import 'package:flutter_bloc_clean_architecture/core/constant/costant.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_bloc_clean_architecture/core/error/failure.dart';
 import 'package:flutter_bloc_clean_architecture/core/network/connection_checker.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_bloc_clean_architecture/features/auth/data/datasources/a
 import 'package:flutter_bloc_clean_architecture/features/auth/data/model/user_model.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as sp;
 
 class AuthRepositoryImpl implements AuthRepository {
   /*
@@ -68,13 +68,11 @@ class AuthRepositoryImpl implements AuthRepository {
   ) async {
     try {
       if(!await connectionChecker.isConnected){
-        return left(Failure('No Internet Connection!!!'));
+        return left(Failure(Constants.noConnectionErrorMsg));
       }
       final user = await fn();
 
       return right(user);
-    } on sp.AuthException catch (e){
-      return left(Failure(e.message));
     }
     on ServerExpection catch (e) {
       return left(Failure(e.message));

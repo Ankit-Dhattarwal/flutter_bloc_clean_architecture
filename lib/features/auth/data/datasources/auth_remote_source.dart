@@ -57,6 +57,8 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
         throw const ServerExpection('User is null!!');
       }
       return UserModel.fromJson(response.user!.toJson());
+    } on AuthException catch (e){
+      throw ServerExpection(e.message);
     } catch (e) {
       throw ServerExpection(e.toString());
     }
@@ -71,9 +73,11 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
             .select()
             .eq('id', currentUserSession!.user.id);
 
-        return UserModel.fromJson(userData.first).copyWith(email: currentUserSession!.user.email);
+        return UserModel.fromJson(userData.first).copyWith(email: currentUserSession!.user.email) ;
       }
       return null;
+    } on AuthException catch (e){
+      throw ServerExpection(e.message);
     } catch (e) {
       throw ServerExpection(e.toString());
     }

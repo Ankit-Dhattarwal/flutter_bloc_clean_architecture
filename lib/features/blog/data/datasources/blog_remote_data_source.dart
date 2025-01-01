@@ -23,6 +23,8 @@ class BlogRemoteDataSourceImpl extends BlogRemoteDataSource {
       final blogData =
           await supabaseClient.from('blogs').insert(blog.toJson()).select();
       return BlogModel.fromJson(blogData.first);
+    } on PostgrestException catch(e){
+      throw ServerExpection(e.message);
     } catch (e) {
       throw ServerExpection(e.toString());
     }
@@ -37,6 +39,8 @@ class BlogRemoteDataSourceImpl extends BlogRemoteDataSource {
       print('ankit -${blog.id}');
       await supabaseClient.storage.from('blog_images').upload(blog.id, image);
       return supabaseClient.storage.from('blog_images').getPublicUrl(blog.id);
+    } on StorageException catch(e){
+      throw ServerExpection(e.message);
     } catch (e) {
       throw ServerExpection(e.toString());
     }
@@ -51,7 +55,9 @@ class BlogRemoteDataSourceImpl extends BlogRemoteDataSource {
           .map((blog) => BlogModel.fromJson(blog)
               .copyWith(posterName: blog['profiles']['name']))
           .toList();
-    } catch (e) {
+    } on PostgrestException catch(e){
+      throw ServerExpection(e.message);
+    }catch (e) {
       throw ServerExpection(e.toString());
     }
   }

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_clean_architecture/ankit-test/counter/counter_page.dart';
 import 'package:flutter_bloc_clean_architecture/core/common/widgets/loader.dart';
 import 'package:flutter_bloc_clean_architecture/core/theme/appColors.dart';
 import 'package:flutter_bloc_clean_architecture/core/utils/show_snackbar.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_event.dart';
-import 'package:flutter_bloc_clean_architecture/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/pages/signup_page.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/widgets/auth_field.dart';
 import 'package:flutter_bloc_clean_architecture/features/auth/presentation/widgets/auth_gradient_button.dart';
